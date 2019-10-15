@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2037
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StaffList", "StaffList\StaffList.csproj", "{CC070691-5F0B-477E-8B1F-A2D14491AD7F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CC070691-5F0B-477E-8B1F-A2D14491AD7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC070691-5F0B-477E-8B1F-A2D14491AD7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC070691-5F0B-477E-8B1F-A2D14491AD7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC070691-5F0B-477E-8B1F-A2D14491AD7F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BBDF3FA1-DDDD-461F-9505-34E0C8D61A5F}
+	EndGlobalSection
+EndGlobal

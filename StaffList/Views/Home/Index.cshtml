@@ -1,0 +1,77 @@
+﻿@model System.Data.DataTable
+
+@{
+    ViewBag.Title = "Employees";
+}
+
+<div style="margin: 20px 0px">
+
+    <input class="btn btn-default" type='button' value='Добавить сотрудника' onclick='window.location = "@Url.Action("Create","Home")";' />
+    
+    @using (Html.BeginForm("Search", "Home", FormMethod.Post,new { @class = "inline"})) {
+        <input type = "search" class="" value = "Поиск сотрудника в базе" />
+        <button type = "submit" class="btn btn-default glyphicon-search"></button>
+    }
+</div>
+<div>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr><th>№</th><th>ФИО</th><th>Возраст</th><th>Отдел</th><th>Должность</th><th>Наличие а/м</th><th>Стаж</th><th>Статус</th><th>Сем.полож.</th><th>Комментарий</th><th>Дейстие</th></tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Rows.Count; i++) {
+            <tr>
+                <td>@Model.Rows[i][0]</td>
+                <td>@Model.Rows[i][1]</td>
+                <td>
+                    @{
+                        int period = DateTime.Now.Year - ((DateTime)Model.Rows[i][2]).Year;
+                        string postfix = "";
+                        switch (period % 20) {
+                            case 1: { postfix = "год"; break; }
+                            case 2: { postfix = "года"; break; }
+                            case 3: { postfix = "года"; break; }
+                            case 4: { postfix = "года"; break; }
+                            default: { postfix = "лет"; break; }
+                        }
+                         <p>@period @postfix</p>
+                    }
+                </td>
+                <td>@Model.Rows[i][3]</td>
+                <td>@Model.Rows[i][4]</td>
+                <td>@{ if ((bool)@Model.Rows[i][5] == true) { <p>да</p>} else { <p>нет</p> }}</td>
+                <td>@{
+                    period = 0;
+
+                    if (Convert.ToString(Model.Rows[i][7]) == "") { period = DateTime.Now.Year - ((DateTime)Model.Rows[i][6]).Year; }
+                    else { period = ((DateTime)Model.Rows[i][7]).Year - ((DateTime)Model.Rows[i][6]).Year; }
+                    postfix = "";
+                    switch (period % 20) {
+                        case 1: { postfix = "год"; break; }
+                        case 2: { postfix = "года"; break; }
+                        case 3: { postfix = "года"; break; }
+                        case 4: { postfix = "года"; break; }
+                        default: {  postfix = "лет"; break; }
+                    }
+                    <p>@period @postfix</p>
+                    }
+                </td>
+                <td>@{ if (Convert.ToString(Model.Rows[i][7]) != "") { <p>Уволен</p> } else { <p>Работает</p> } }</td>
+                <td>@{  if ((bool)@Model.Rows[i][8] == true) {
+                                if ((bool)@Model.Rows[i][10] == true) { <p>Женат</p>} else { <p>Замужем</p>}
+                            } else {
+                                if ((bool)@Model.Rows[i][10] == true) { <p>Холост</p>} else { <p>Не замужем</p>}
+                            }
+                        }
+                </td>
+                <td>@Model.Rows[i][9]</td>
+
+                <td>
+                    <input type='button' value='Ред.' onclick='window.location = "@Url.Action("Edit","Home") ";' />
+                    <input type='button' value='Уволить' onclick='window.location = "@Url.Action("Dismiss","Home") ";' />
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
