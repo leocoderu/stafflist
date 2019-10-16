@@ -39,7 +39,7 @@
                 </td>
                 <td>@Model.Rows[i][3]</td>
                 <td>@Model.Rows[i][4]</td>
-                <td>@{ if ((bool)@Model.Rows[i][5] == true) { <p>да</p>} else { <p>нет</p> }}</td>
+                <td>@{ if ((bool?)@Model.Rows[i][5] == true) { <p>да</p>} else { <p>нет</p> }}</td>
                 <td>@{
                     period = 0;
 
@@ -57,10 +57,10 @@
                     }
                 </td>
                 <td>@{ if (Convert.ToString(Model.Rows[i][7]) != "") { <p>Уволен</p> } else { <p>Работает</p> } }</td>
-                <td>@{  if ((bool)@Model.Rows[i][8] == true) {
-                                if ((bool)@Model.Rows[i][10] == true) { <p>Женат</p>} else { <p>Замужем</p>}
+                <td>@{  if ((bool?)@Model.Rows[i][8] == true) {
+                                if ((bool?)@Model.Rows[i][10] == true) { <p>Женат</p>} else { <p>Замужем</p>}
                             } else {
-                                if ((bool)@Model.Rows[i][10] == true) { <p>Холост</p>} else { <p>Не замужем</p>}
+                                if ((bool?)@Model.Rows[i][10] == true) { <p>Холост</p>} else { <p>Не замужем</p>}
                             }
                         }
                 </td>

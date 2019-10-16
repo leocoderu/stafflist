@@ -12,8 +12,26 @@ namespace StaffList.Models {
         [HiddenInput(DisplayValue = false)]
         public int Id { get; set; }
 
+        [Required(ErrorMessage = "Необходимо ввести Логин для Авторизации", AllowEmptyStrings = false)]
+        [Display(Name = "Логин")]
+        [StringLength(50)]
+        public string Login { get; set; }
+
+        [Required(ErrorMessage = "Необходимо ввести Пароль для Авторизации", AllowEmptyStrings = false)]
+        [Display(Name = "Пароль")]
+        [DataType(DataType.Password)]
+        [StringLength(50,MinimumLength = 8, ErrorMessage = "пароль должен содержать не менее 8 символов")]
+        public string Password { get; set; }
+
+        [Required(ErrorMessage = "Необходимо ввести подтверждение Пароля", AllowEmptyStrings = false)]
+        [Display(Name = "Подтверждение пароля")]
+        [DataType(DataType.Password)]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "Введенные пароли не совпадают")]
+        public string ConfirmPassword { get; set; }
+
         [Required(ErrorMessage = "Необходимо ввести Имя сотрудника", AllowEmptyStrings = false)]
         [Display(Name="ФИО сотрудника")]
+        [StringLength(50)]
         public string Name { get; set; }
         
         [Required(ErrorMessage = "Необходимо указать день рождения сотрудника", AllowEmptyStrings = false)]
