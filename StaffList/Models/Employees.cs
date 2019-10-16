@@ -12,11 +12,11 @@ namespace StaffList.Models {
         [HiddenInput(DisplayValue = false)]
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Необходимо ввести Имя сотрудника")]
+        [Required(ErrorMessage = "Необходимо ввести Имя сотрудника", AllowEmptyStrings = false)]
         [Display(Name="ФИО сотрудника")]
         public string Name { get; set; }
         
-        [Required(ErrorMessage = "Необходимо указать день рождения сотрудника")]
+        [Required(ErrorMessage = "Необходимо указать день рождения сотрудника", AllowEmptyStrings = false)]
         [Display(Name = "Дата рождения")]
         [DataType(DataType.Date)]
         public DateTime BirthDate { get; set; }
@@ -49,18 +49,29 @@ namespace StaffList.Models {
         [Display(Name = "Должность")]
         public Position Position { get; set; }
 
+        [Required(ErrorMessage ="Необходимо указать электроннцю почту", AllowEmptyStrings = false)]
+        [Display(Name = "Эл. почта")]
+        [RegularExpression(@"^([0-9a-zA-Z]([\+\-_\.][0-9a-zA-Z]+)*)+@(([0-9a-zA-Z][-\w]*[0-9a-zA-Z]*\.)+[a-zA-Z0-9]{2,3})$", ErrorMessage ="Пожалуйста укажите корректный адрес")]
+        public string EMail { get; set; }
+
         [Display(Name = "Комментарии")]
         [UIHint("MultilineText")]
         public string Comments { get; set; }
     }
 
     public class Department {
+        [HiddenInput(DisplayValue = false)]
         public int Id { get; set; }
+
+        [Required]
         public string Name { get; set; }
     }
 
     public class Position {
+        [HiddenInput(DisplayValue = false)]
         public int Id { get; set; }
+
+        [Required]
         public string Name { get; set; }
     }
 }

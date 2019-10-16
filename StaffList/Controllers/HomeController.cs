@@ -30,13 +30,37 @@ namespace StaffList.Controllers
         }
 
         public ActionResult Create() {
-            return View(new Employees());
+            return View();
         }
 
-        /*
-        [HttpPost] 
+        
+        [HttpPost]
+       // [ValidateAntiForgeryToken]
         public ActionResult Create(Employees Emp) {
-            return View("Index");
-        }*/
+         //   if (ModelState.IsValid) {
+                using (SqlConnection sqlCon = new SqlConnection(connectionString)) {
+                                       
+                    sqlCon.Open();
+                    SqlCommand cmd = new SqlCommand("INSERT INTO[dbo].[Staff]([Name], [Gender], [BirthDate], [EnterDate], [LeaveDate], [Automobile], [Married], [Department], [Position], [Comments]) " +
+                        "VALUES(@name,@gender,@birdate,@enterdadte,@lastdate,@automobile,@married,@department,@position,@comment", sqlCon);
+                    cmd.Parameters.AddWithValue("@name", Emp.Name);
+                    cmd.Parameters.AddWithValue("@gender", Emp.Gender);
+                    cmd.Parameters.AddWithValue("@birdate", Emp.BirthDate);
+                    cmd.Parameters.AddWithValue("@enterdadte", Emp.EnterDate);
+                    cmd.Parameters.AddWithValue("@lastdate", Emp.LeaveDate);
+                    cmd.Parameters.AddWithValue("@automobile", Emp.Automobile);
+                    cmd.Parameters.AddWithValue("@married", Emp.Married);
+                    cmd.Parameters.AddWithValue("@department", Emp.Department);
+                    cmd.Parameters.AddWithValue("@position", Emp.Position);
+                    cmd.Parameters.AddWithValue("@comment", Emp.Comments);
+                        
+                    cmd.ExecuteNonQuery();
+
+                    sqlCon.Close();
+                }
+                ViewBag.Message = "Сотрудник добавлен.";
+           // }
+            return View(Emp);
+        }
     }
 }
