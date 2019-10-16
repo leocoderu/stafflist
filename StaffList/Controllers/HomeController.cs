@@ -11,10 +11,8 @@ namespace StaffList.Controllers
 {
     public class HomeController : Controller
     {
-        //string connectionString = @"Data Source = (localdb)\MSSQLLocalDB;Initial Catalog = RSXB; Integrated Security = True";
         string connectionString = @"Data Source = (LocalDb)\MSSQLLocalDB;Initial Catalog = RSXB; Integrated Security = True;AttachDBFilename=|DataDirectory|\RSXB.mdf";
-
-
+        
         [HttpGet]
         public ActionResult Index()
         {
@@ -30,10 +28,27 @@ namespace StaffList.Controllers
         }
 
         public ActionResult Create() {
-            return View();
-        }
 
-        
+            //TODO: Необходимо сделать в представлении DropBoxes с выборкой по таблица Department и Position
+            DataTable tmpTable = new DataTable();
+            ViewModel viewModel = new ViewModel();
+
+            using (SqlConnection sqlCon = new SqlConnection(connectionString)) {
+                sqlCon.Open();
+                SqlDataAdapter sqlData = new SqlDataAdapter("SELECT Name FROM Department", sqlCon);
+                sqlData.Fill(tmpTable);
+                sqlCon.Close();
+            }
+
+            //enum query = tmpTable.From
+
+            //foreach(Department s in tmpTable) {
+            //    viewModel.dep.Id = s.
+            //}
+
+            return View(viewModel);
+        }
+                
         [HttpPost]
        // [ValidateAntiForgeryToken]
         public ActionResult Create(Employees Emp) {
@@ -64,7 +79,7 @@ namespace StaffList.Controllers
                 sqlCon.Close();
                 }
                 ViewBag.Message = "Сотрудник добавлен.";
-           // }
+            //}
             return View(Emp);
         }
     }
