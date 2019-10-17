@@ -78,10 +78,13 @@ namespace StaffList.Models {
     }
 
     public class Department {
+        public List<SelectListItem> Departments { get; set; }
+
         [HiddenInput(DisplayValue = false)]
         public int Id { get; set; }
 
         [Required]
+        [Display(Name = "Отдел")]
         public string Name { get; set; }
     }
 
@@ -90,6 +93,7 @@ namespace StaffList.Models {
         public int Id { get; set; }
 
         [Required]
+        [Display(Name = "Должность")]
         public string Name { get; set; }
     }
 }

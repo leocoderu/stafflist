@@ -6,9 +6,9 @@ using System.Web;
 namespace StaffList.Models {
     public class ViewModel {
 
-        public Employees employees { get; set; }
-        public Department department { get; set; }
-        public Position position { get; set; }
+        public Employees Emp { get; set; }
+        public Department DepUser { get; set; }
+        public Position PosUser { get; set; }
 
     }
 }
