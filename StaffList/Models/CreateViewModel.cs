@@ -4,10 +4,12 @@ using System.Linq;
 using System.Web;
 
 namespace StaffList.Models {
-    public class ViewModel {
+    public class CreateViewModel {
 
         public Employees Emp { get; set; }
-        public Department DepUser { get; set; }
+
+        public List<Department> Departments { get; set; }
+
         public Position PosUser { get; set; }
 
     }

@@ -28,18 +28,16 @@ namespace StaffList.Controllers
         }
 
         public ActionResult Create() {
-
             //TODO: Необходимо сделать в представлении DropBoxes с выборкой по таблица Department и Position
-            //IEnumerable<ViewModel> viewModel = new { ViewModel new {DepUser.Id = }}
-            
-            ViewModel viewModel = new ViewModel();
-            viewModel.DepUser.Departments = DepartmentList();
+           
+            //CreateViewModel vModel = new CreateViewModel();
+            //vModel.Departments = DepartmentList();
 
             return View();
         }
 
-        private static List<SelectListItem> DepartmentList() {
-            List<SelectListItem> items = new List<SelectListItem>();
+        private static List<Department> DepartmentList() {
+            List<Department> items = new List<Department>();
 
             using (SqlConnection sqlCon = new SqlConnection(connectionString)) {
                 string query = "SELECT Id, Name FROM Department";
@@ -48,9 +46,9 @@ namespace StaffList.Controllers
                     sqlCon.Open();
                     using (SqlDataReader sdr = cmd.ExecuteReader()) {
                         while (sdr.Read()) {
-                            items.Add(new SelectListItem {
-                                Text = sdr["Name"].ToString(),
-                                Value = sdr["Id"].ToString()
+                            items.Add(new Department {
+                                Name = sdr["Name"].ToString(),
+                                Id = Convert.ToInt16(sdr["Id"])
                             });
                         }
                     }
@@ -62,7 +60,7 @@ namespace StaffList.Controllers
                 
         [HttpPost]
        // [ValidateAntiForgeryToken]
-        public ActionResult Create(ViewModel viewModel) {
+        public ActionResult Create(CreateViewModel viewModel) {
          //   if (ModelState.IsValid) {
                 using (SqlConnection sqlCon = new SqlConnection(connectionString)) {
                                        
@@ -80,7 +78,7 @@ namespace StaffList.Controllers
                 cmd.Parameters.AddWithValue("@leavedate", viewModel.Emp.LeaveDate);
                 cmd.Parameters.AddWithValue("@automobile", viewModel.Emp.Automobile);
                 cmd.Parameters.AddWithValue("@married", viewModel.Emp.Married);
-                cmd.Parameters.AddWithValue("@department", viewModel.DepUser.Id);
+                cmd.Parameters.AddWithValue("@department", viewModel.Departments);
                 cmd.Parameters.AddWithValue("@position", viewModel.PosUser.Id);
                 cmd.Parameters.AddWithValue("@email", viewModel.Emp.EMail);
                 cmd.Parameters.AddWithValue("@comment", viewModel.Emp.Comments);

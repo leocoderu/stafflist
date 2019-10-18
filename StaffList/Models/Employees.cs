@@ -78,8 +78,6 @@ namespace StaffList.Models {
     }
 
     public class Department {
-        public List<SelectListItem> Departments { get; set; }
-
         [HiddenInput(DisplayValue = false)]
         public int Id { get; set; }
 

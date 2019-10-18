@@ -1,4 +1,4 @@
-﻿@model StaffList.Models.ViewModel
+﻿@model StaffList.Models.CreateViewModel
 
 @{
     ViewBag.Title = "Create new employee";
@@ -108,17 +108,16 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(m => m.DepUser.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            @*@Html.LabelFor(m => m.Departments.Name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @*@Html.ListBoxFor(m => StaffList.Models.Department, "" )
-                @Html.DropDownListFor(m => m.)*@
-            </div>
+                @Html.DropDownListFor(m => m, Model.Departments[0].Name, "")
+            </div>*@
         </div>
 
         <div class="form-group">
             @Html.LabelFor(m => m.PosUser.Name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(m => m.DepUser.Id, Model.DepUser.Departments, "")
+                @*@Html.DropDownListFor(m => m.DepUser.Id, Model.DepUser.Departments, "")*@
             </div>
         </div>
 
