@@ -29,15 +29,19 @@ namespace StaffList.Controllers
 
         public ActionResult Create() {
             //TODO: Необходимо сделать в представлении DropBoxes с выборкой по таблица Department и Position
-           
-            //CreateViewModel vModel = new CreateViewModel();
-            //vModel.Departments = DepartmentList();
 
-            return View();
+            CreateViewModel vModel = new CreateViewModel {
+                Departments = DepartmentList(),
+                Positions = PositionList()
+            };
+
+            return View(vModel);
         }
 
         private static List<Department> DepartmentList() {
-            List<Department> items = new List<Department>();
+            List<Department> items = new List<Department> {
+                new Department { Id = -1, Name = "Выберете отдел" }
+            };
 
             using (SqlConnection sqlCon = new SqlConnection(connectionString)) {
                 string query = "SELECT Id, Name FROM Department";
@@ -57,12 +61,40 @@ namespace StaffList.Controllers
             }
             return items;
         }
-                
+
+        private static List<Position> PositionList() {
+            List<Position> items = new List<Position> {
+                new Position { Id = -1, Name = "Выберете должность" }
+            };
+
+            using (SqlConnection sqlCon = new SqlConnection(connectionString)) {
+                string query = "SELECT Id, Name FROM Position";
+                using (SqlCommand cmd = new SqlCommand(query)) {
+                    cmd.Connection = sqlCon;
+                    sqlCon.Open();
+                    using (SqlDataReader sdr = cmd.ExecuteReader()) {
+                        while (sdr.Read()) {
+                            items.Add(new Position {
+                                Name = sdr["Name"].ToString(),
+                                Id = Convert.ToInt16(sdr["Id"])
+                            });
+                        }
+                    }
+                    sqlCon.Close();
+                }
+            }
+            return items;
+        }
+
         [HttpPost]
        // [ValidateAntiForgeryToken]
-        public ActionResult Create(CreateViewModel viewModel) {
-         //   if (ModelState.IsValid) {
-                using (SqlConnection sqlCon = new SqlConnection(connectionString)) {
+        public ActionResult Create(CreateViewModel viewModel, int? departmentId, int? positionId) {
+            //   if (ModelState.IsValid) {
+
+            viewModel.Departments = DepartmentList();
+            viewModel.Positions = PositionList();
+            
+            using (SqlConnection sqlCon = new SqlConnection(connectionString)) {
                                        
                 sqlCon.Open();
 
@@ -78,8 +110,8 @@ namespace StaffList.Controllers
                 cmd.Parameters.AddWithValue("@leavedate", viewModel.Emp.LeaveDate);
                 cmd.Parameters.AddWithValue("@automobile", viewModel.Emp.Automobile);
                 cmd.Parameters.AddWithValue("@married", viewModel.Emp.Married);
-                cmd.Parameters.AddWithValue("@department", viewModel.Departments);
-                cmd.Parameters.AddWithValue("@position", viewModel.PosUser.Id);
+                cmd.Parameters.AddWithValue("@department", departmentId);
+                cmd.Parameters.AddWithValue("@position", positionId);
                 cmd.Parameters.AddWithValue("@email", viewModel.Emp.EMail);
                 cmd.Parameters.AddWithValue("@comment", viewModel.Emp.Comments);
 
@@ -89,7 +121,7 @@ namespace StaffList.Controllers
                 }
                 ViewBag.Message = "Сотрудник добавлен.";
             //}
-            return View();
+            return View(viewModel);
         }
     }
 }
